@@ -6,10 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
-mongoose.connect( 'mongodb://localhost/react-express-starter' );
+mongoose.connect( 'mongodb://localhost/recipes' );
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var recipes = require('./routes/recipes');
 var app = express();
 
 // view engine setup
@@ -25,8 +26,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/materialize', express.static(__dirname + '/node_modules/materialize-css/dist/js/'));
 app.use('/jquery', express.static(__dirname + '/node_modules/materialize-css/node_modules/jquery/dist/'));
+
 app.use('/', index);
 app.use('/users', users);
+app.use('/recipes', recipes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
