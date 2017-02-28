@@ -1,8 +1,33 @@
 import React from 'react';
 
 class Choices extends React.Component {
-  state = {showCreate: false, name: '', ingredients: '', directions: '', nameSave: '', ingredientsSave: [], directionsSave: [], recipe: {name: ' ', ingredients: [], directions: []}}
+  state = {showCreate: false, name: '', ingredients: '', directions: '', nameSave: '', ingredientsSave: [], directionsSave: [], recipe: {name: ' ', ingredients: [], directions: []}, recipes: []}
   
+  // componentDidMount() {
+  //   $.ajax({
+  //     url: '/recipes',
+  //     type:'GET'
+  //   }).done( recipes => {
+  //     this.setState({recipes});
+  //   });
+  // }
+
+  showRecipes = () => {
+    $.ajax({
+      url: '/recipes',
+      type:'GET'
+    }).done( recipes => {
+      this.setState({recipes});
+    });
+    let recipesArr = this.state.recipes.map((rec, i) => {
+      return(
+        <li key={i}>{rec.name}</li>
+      );
+    });
+
+   return recipesArr;
+  }
+
   toggleShowCreate = () => {
     this.setState({showCreate: !this.state.showCreate});
   }
@@ -31,7 +56,7 @@ class Choices extends React.Component {
   directionsList = () => {
     return this.state.directionsSave.map((dir, i) => {
       return(
-        <li key={i}>{dir}</li>
+        <li key={i}>{dir}</li>}
       );
     });
   }
@@ -49,12 +74,6 @@ class Choices extends React.Component {
       console.log('woo')
     );
     } 
-
-    showRecipes = () => {
-      return(
-        <h1> YOU WANT SOME FOOD?!?!</h1>
-      )
-    }
 
   createForm() {
     return (
@@ -134,9 +153,9 @@ class Choices extends React.Component {
     return(
       <div className = "center">
           <button className='btn' onClick={this.toggleShowCreate}>{this.state.showCreate ? 'Recipes' : 'Create'}</button>
-          {this.state.showCreate ?
+          <ul>{this.state.showCreate ?
           this.createForm() : this.showRecipes()
-          }
+          }</ul>
       </div>
     )
   }

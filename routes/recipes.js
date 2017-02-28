@@ -3,8 +3,8 @@ const router = express.Router();
 const Recipe = require('../models/recipe');
 
 router.get('/', (req, res) => {
-  Recipe.findById(req.params.id, ( err, recipe) => {
-    res.render('recipe', {recipe});
+  Recipe.find( ( err, recipes) => {
+    res.json(recipes);
   });
 });
 
